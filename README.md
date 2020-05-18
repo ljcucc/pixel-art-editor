@@ -1,7 +1,7 @@
 # Pixel Art Editor
 A pixel art editor which made by using Processing, GUI are built in canvas.
 
-# Cooperation
+# Contributions
 Pull request is welcome. 😄
 
 ## Coding style

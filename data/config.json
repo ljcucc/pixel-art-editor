@@ -1,0 +1,11 @@
+{
+  "fullScreen":false,
+  "padding":8,
+  "systemFontSize":24,
+  "lineWeight":3,
+
+  "OpenGL":"processing.opengl.PGraphics2D",
+  "JavaFX":"processing.javafx.PGraphicsFX2D",
+
+  "renderer":"processing.opengl.PGraphics2D"
+}

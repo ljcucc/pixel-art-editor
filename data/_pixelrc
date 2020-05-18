@@ -1,0 +1,5 @@
+# open the common tools window
+win Common tools
+
+#make canvas enable on start
+set canvasEnable true

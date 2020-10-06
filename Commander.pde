@@ -50,13 +50,16 @@ class CommandDetector{
   }
 }
 
+JSONArray array;
+
 class Commander{
   public void run(String command){
-    this.parenthesize(this.tokenize(command));
+    array = parseJSONArray(this.parenthesize(this.tokenize(command)));
+    println(array);
   }
   
   private String[] tokenize(String command){
-    command = command;
+    //command = command;
     String[] strSpl = command.split("\"");
     
     for(int i = 0; i < strSpl.length; i++){
@@ -68,7 +71,7 @@ class Commander{
         strSpl[i] = strSpl[i].replaceAll("[\\(]", " ( ").replaceAll("[\\)]", " ) ");
     }
     
-    String[] result = String.join("\"", strSpl).trim().split(" ");
+    String[] result = String.join("\"", strSpl).trim().split("\\s+");
     
     for(int i = 0; i < result.length; i++){
       result[i] = result[i].replaceAll("!!whitespace!!", " ");
@@ -79,10 +82,11 @@ class Commander{
     return result;
   }
   
-  private void parenthesize(String[] tonkenized){
+  private String parenthesize(String[] tonkenized){
     for(int i = 0; i < tonkenized.length; i++){
-      if(tonkenized[i].equals("(")) tonkenized[i] = "[\"";
-      else if(tonkenized[i].equals(")")) tonkenized[i] = "\"]";
+      if(tonkenized[i].equals("(")) tonkenized[i] = "[\"\"";
+      else if(tonkenized[i].equals(")")) tonkenized[i] = "\"\"]";
+      else if(tonkenized[i].length() == 0) tonkenized[i] = tonkenized[i];
       else tonkenized[i] = (
         tonkenized[i].charAt(0) == '\"'?
           (tonkenized[i].charAt(tonkenized[i].length()-1) != '\"'? tonkenized[i] + "\"" : tonkenized[i]) :
@@ -94,8 +98,7 @@ class Commander{
       );
     }
     
-    String JSON = "["+String.join(",", tonkenized).replaceAll("!!str_pstart!!", "(").replaceAll("!!str_pend!!", ")")+"]";
-    println(JSON);
+    return "["+String.join(",", tonkenized).replaceAll("!!str_pstart!!", "(").replaceAll("!!str_pend!!", ")")+"]";
     
   }
 }

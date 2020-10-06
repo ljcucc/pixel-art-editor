@@ -16,18 +16,6 @@ ArrayList<ElementUI> elements = new ArrayList<ElementUI>();
 boolean allMenuBoxStatus = false;
 
 void uiRefresh() {
-  //drawMenu();
-
-  //println("refreshing ui...");
-
-  //for (short i = 0; i < elements.size(); i++) {
-
-  //  fill(0);
-
-  //  elements.get(i).setup();
-  //  //elements.get(i).uiUpdate();
-  //}
-  
    uiRendering();
 }
 
@@ -37,8 +25,6 @@ void uiRendering() {
 
   renderingTimes++;
   
-  //println("Rendering times:"+renderingTimes);
-
   for (short i = 0; i < elements.size(); i++) {
     elements.get(i).draw();
   }
@@ -47,9 +33,7 @@ void uiRendering() {
 public interface Element {
   public void setup();
   public void draw();
-  //public void uiUpdate();
-
-  //public void onClick(int mX, int mY);
+  
   public void onEvent(String type, JSONObject parm);
 }
 public class ElementUI implements Element {

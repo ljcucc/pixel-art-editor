@@ -12,8 +12,6 @@ JSONObject systemProp ;
 
 int[] canvasPosition = {60, 60};
 
-//ArrayList<Boolean> pixelButtons;
-
 void settings() {
   noSmooth();
   systemProp = loadJSONObject("config.json");
@@ -40,11 +38,10 @@ void setup() {
   background(100, 85, 98);
 
   pixelFont = loadFont("fonts/Munro-60.vlw");
-  //pixelFont = loadFont("Charybdis-48.vlw");
   textFont(pixelFont);
 
 
-  uiSetup();
+  uiSetup(); // setup UI elemenets
   runCommandFromFile(pixelrc);
   
   refresh();
@@ -61,15 +58,6 @@ void draw() {
     setuped = true;
     frame.setLocation(displayWidth/2-width/2, displayHeight/2-height/2);
   }
-
-  //if (mousePressed) {
-  //  lastPressed = true;
-  //  paintEvent();
-  //  renderingLayer(canvas);
-  //} else if (lastPressed) {
-  //  lastPosition[0] = -1;
-  //  lastPosition[1] = -1;
-  //}
 
   if (lastWidth != width || lastHeight != height) {
     if (width < 400) {

@@ -15,12 +15,11 @@ void uiSetup() {
   String[] WindowsOptions = {"Commom tools [:win Common tools]"};
   String[] toolsOptions = {"Colors [1~9]", "Pencil [:nofill]", "Eraser [e]", "Fill [:fill]"};
   String[] helpOptions = {"About [:about]", "Command help [:h or :help]"};
+  
   MenuButton Menu_File = new MenuButton("File", new MenuBox(fileOptions, startX+countWidth - lineWeight *2, systemFontSize + padding*2 + lineWeight *2 ), startX);
   countWidth += Menu_File.getWidth();
-  //println("Menu added:"+countWidth);
   MenuButton Menu_Edit = new MenuButton("Edit", new MenuBox(editOptions, startX+countWidth - lineWeight *2, systemFontSize + padding*2 + lineWeight *2), startX+countWidth);
   countWidth += Menu_Edit.getWidth();
-  //println("Menu added:"+countWidth);
   MenuButton Menu_View = new MenuButton("View", new MenuBox(ViewOptions, startX+countWidth - lineWeight *2, systemFontSize + padding*2 + lineWeight *2), startX+countWidth);
   countWidth += Menu_View.getWidth();
   MenuButton Menu_Windows = new MenuButton("Windows", new MenuBox(WindowsOptions, startX+countWidth - lineWeight *2, systemFontSize + padding*2 + lineWeight *2), startX+countWidth);

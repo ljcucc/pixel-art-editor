@@ -1,4 +1,5 @@
 import java.util.regex.*;  
+import java.lang.*;
 
 int FONT_SIZE = 14;
 
@@ -51,28 +52,59 @@ class CommandDetector{
 
 class Commander{
   public void run(String command){
-    command = "("+command+")";
+    this.parenthesize(this.tokenize(command));
+  }
+  
+  private String[] tokenize(String command){
+    command = command;
     String[] strSpl = command.split("\"");
     
     for(int i = 0; i < strSpl.length; i++){
       if(i%2 == 1)
-        strSpl[i] = "\""+strSpl[i].replaceAll(" ", "!!whitespace!!")
-        .replaceAll("(", "!!str_pstart!!")
-        .replaceAll(")", "!!str_pend!!")+"\"";
+        strSpl[i] = strSpl[i].replaceAll(" ", "!!whitespace!!")
+        .replaceAll("[\\(]", "!!str_pstart!!")
+        .replaceAll("[\\)]", "!!str_pend!!");
       else
-        strSpl[i] = strSpl[i].replaceAll("(", " ( ").replaceAll(")", " ) ");
+        strSpl[i] = strSpl[i].replaceAll("[\\(]", " ( ").replaceAll("[\\)]", " ) ");
     }
     
-    String strwhtBan = String.join("", strSpl);
-    println(String.join(",",strwhtBan.split(" ")));
+    String[] result = String.join("\"", strSpl).trim().split(" ");
     
-    
-    if(command.equals("load")){
-      println("load image");
+    for(int i = 0; i < result.length; i++){
+      result[i] = result[i].replaceAll("!!whitespace!!", " ");
     }
     
-    if(command.equals("q") || command.equals("quit")){
-      exit();
-    }
+    println(String.join(",",result));
+    
+    return result;
   }
+  
+  private void parenthesize(String[] tonkenized){
+    for(int i = 0; i < tonkenized.length; i++){
+      if(tonkenized[i].equals("(")) tonkenized[i] = "[\"";
+      else if(tonkenized[i].equals(")")) tonkenized[i] = "\"]";
+      else tonkenized[i] = (
+        tonkenized[i].charAt(0) == '\"'?
+          (tonkenized[i].charAt(tonkenized[i].length()-1) != '\"'? tonkenized[i] + "\"" : tonkenized[i]) :
+          
+          (isNaN(tonkenized[i]) ? 
+            "\"$"+tonkenized[i]+"\"" :
+            tonkenized[i]
+          )
+      );
+    }
+    
+    String JSON = "["+String.join(",", tonkenized).replaceAll("!!str_pstart!!", "(").replaceAll("!!str_pend!!", ")")+"]";
+    println(JSON);
+    
+  }
+}
+
+boolean isNaN(String value){
+  try{
+    Integer.parseInt(value);
+    return false;
+   }catch(Exception e){
+    return true;
+   }
 }

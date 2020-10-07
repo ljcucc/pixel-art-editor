@@ -15,6 +15,7 @@ void draw(){
   background(255);
   
   cd.render();
+  pd.render();
 }
 
 void keyTyped() {

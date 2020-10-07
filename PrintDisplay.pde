@@ -12,4 +12,8 @@ class PrintDisplay{
     textSize(FONT_SIZE);
     text(this.displayString,20,20);
   }
+  
+  public void append(String msg){
+    displayString += (msg+"\n");
+  }
 }

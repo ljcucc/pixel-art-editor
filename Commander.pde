@@ -12,7 +12,7 @@ class CommandDetector{
   }
   
   private void detectTyping(){
-    if(key == ':'){
+    if(key == ':' && !this.commandDetected){
       this.commandDetected = true;
       println("command start");
       return; // detected command is typing with ':' head.
@@ -50,7 +50,7 @@ class CommandDetector{
 }
 
 void runLisp(String command){
-  CommandExec(parseJSONArray(parenthesize(tokenize(command))));
+  CmdExec(parseJSONArray(parenthesize(tokenize(command))));
 }
 
 String[] tokenize(String command){

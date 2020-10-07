@@ -8,13 +8,11 @@ class CommandDetector{
   private String recorded = "";
   
   private PFont font;
-  private CommandViewer cv;
   private Commander c;
   
-  CommandDetector(CommandViewer cv, Commander c){
+  CommandDetector(Commander c){
     this.font = loadFont("fonts/Monospaced-48.vlw");
     
-    this.cv = cv;
     this.c = c;
   }
   
@@ -25,7 +23,7 @@ class CommandDetector{
       return; // detected command is typing with ':' head.
     }
     
-    if(key == '\n'){
+    if(key == '\n' && this.commandDetected){
       c.run(this.recorded);
       this.commandDetected = false;
       this.recorded = "";

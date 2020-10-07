@@ -3,7 +3,7 @@ CommandDetector cd;
 void setup(){
   size(800, 600);
   
-  cd = new CommandDetector(new CommandViewer(), new Commander());
+  cd = new CommandDetector(new Commander());
 }
 
 void draw(){

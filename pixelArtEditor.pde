@@ -1,9 +1,13 @@
+int FONT_SIZE = 14;
+
 CommandDetector cd;
+PrintDisplay pd;
 
 void setup(){
   size(800, 600);
   
-  cd = new CommandDetector(new Commander());
+  cd = new CommandDetector();
+  pd = new PrintDisplay();
 }
 
 void draw(){

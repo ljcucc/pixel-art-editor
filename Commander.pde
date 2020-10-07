@@ -1,19 +1,14 @@
 import java.util.regex.*;  
 import java.lang.*;
 
-int FONT_SIZE = 14;
-
 class CommandDetector{
-  private boolean commandDetected = false;
-  private String recorded = "";
+  protected boolean commandDetected = false;
+  protected String recorded = "";
   
-  private PFont font;
-  private Commander c;
+  protected PFont font;
   
-  CommandDetector(Commander c){
+  CommandDetector(){
     this.font = loadFont("fonts/Monospaced-48.vlw");
-    
-    this.c = c;
   }
   
   private void detectTyping(){
@@ -24,14 +19,20 @@ class CommandDetector{
     }
     
     if(key == '\n' && this.commandDetected){
-      c.run(this.recorded);
+      runLisp(this.recorded);
       this.commandDetected = false;
       this.recorded = "";
     }
     
+    if(key == '\u0008' && this.commandDetected){
+      if(this.recorded.length() <= 0) return;
+      
+      this.recorded = this.recorded.substring(0, this.recorded.length() -1);
+      return;
+    }
+    
     if(commandDetected){
       this.recorded += key;
-      println(this.recorded);
     }
   }
   
@@ -48,15 +49,11 @@ class CommandDetector{
   }
 }
 
-JSONArray array;
+void runLisp(String command){
+  CommandExec(parseJSONArray(parenthesize(tokenize(command))));
+}
 
-class Commander{
-  public void run(String command){
-    array = parseJSONArray(this.parenthesize(this.tokenize(command)));
-    println(array);
-  }
-  
-  private String[] tokenize(String command){
+String[] tokenize(String command){
     //command = command;
     String[] strSpl = command.split("\"");
     
@@ -79,8 +76,8 @@ class Commander{
     
     return result;
   }
-  
-  private String parenthesize(String[] tonkenized){
+
+ String parenthesize(String[] tonkenized){
     for(int i = 0; i < tonkenized.length; i++){
       if(tonkenized[i].equals("(")) tonkenized[i] = "[\"\"";
       else if(tonkenized[i].equals(")")) tonkenized[i] = "\"\"]";
@@ -99,8 +96,6 @@ class Commander{
     return "["+String.join(",", tonkenized).replaceAll("!!str_pstart!!", "(").replaceAll("!!str_pend!!", ")")+"]";
     
   }
-}
-
 boolean isNaN(String value){
   try{
     Integer.parseInt(value);

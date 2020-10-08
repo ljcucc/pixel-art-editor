@@ -8,6 +8,8 @@ void setup(){
   
   cd = new CommandDetector();
   pd = new PrintDisplay();
+  
+  onCommandInit();
 }
 
 void draw(){

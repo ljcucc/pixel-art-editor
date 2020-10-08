@@ -5,6 +5,9 @@ class CommandDetector{
   protected boolean commandDetected = false;
   protected String recorded = "";
   
+  protected boolean error = false;
+  protected String errorMsg = "";
+  
   protected PFont font;
   
   CommandDetector(){
@@ -14,6 +17,7 @@ class CommandDetector{
   private void detectTyping(){
     if(key == ':' && !this.commandDetected){
       this.commandDetected = true;
+      error = false;
       println("command start");
       return; // detected command is typing with ':' head.
     }
@@ -37,15 +41,28 @@ class CommandDetector{
   }
   
   public void render(){
-    if(!commandDetected) return;
+    if(!commandDetected && !error) return;
+    
     noStroke();
-    fill(200);
+    if(commandDetected && !error)
+      fill(200);
+    else
+      fill(216, 35, 35);
     rect(0, height-30-FONT_SIZE, width, 20+FONT_SIZE);
     
-    fill(0);
+    fill(commandDetected && !error? 0: 255);
     textFont(this.font);
     textSize(FONT_SIZE);
-    text(":"+this.recorded, 4, height-20);
+    if(commandDetected && !error)
+      text(":"+this.recorded, 4, height-20);
+    else
+      text(this.errorMsg, 12, height-20);
+    
+  }
+  
+  public void error(String msg){
+    error = true;
+    errorMsg = msg;
   }
 }
 

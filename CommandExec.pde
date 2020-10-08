@@ -55,23 +55,30 @@ FreeTypeValue CommandParse(JSONArray lisp, int indent){
 
 FreeTypeValue CommandExec(String name, ArrayList<FreeTypeValue> args){
   println("running command: "+name);
-  if(name.equals("print")){
-    println("printing... "+args.get(0).getString());
-    pd.append(args.get(0).getString());
-  }else if(name.equals("setup")){
-    println("args[0]: "+ args.get(0));
-    println("args[1]: "+ args.get(1));
-    settingsSetup(args.get(0).getString(), args.get(1));
-  }else if(name.equals("=")){
-    print("eql condition...");
-    return new FreeTypeValue(args.get(0).getInt() == args.get(1).getInt());
-  }else if(name.equals("+")){
-    println("adding...");
-    return new FreeTypeValue(args.get(0).getInt() + args.get(1).getInt());
-  }else if(name.equals("-")){
-    println("adding...");
-    return new FreeTypeValue(args.get(0).getInt() + args.get(1).getInt());
+  
+  if(CommandLibrary.containsKey(name)){
+    CommandLibrary.get(name).exec(args);
+  }else{
+    cd.error("Command function \""+name+"\" not found!");
   }
+  
+  //if(name.equals("print")){
+  //  println("printing... "+args.get(0).getString());
+  //  pd.append(args.get(0).getString());
+  //}else if(name.equals("setup")){
+  //  println("args[0]: "+ args.get(0));
+  //  println("args[1]: "+ args.get(1));
+  //  settingsSetup(args.get(0).getString(), args.get(1));
+  //}else if(name.equals("=")){
+  //  print("eql condition...");
+  //  return new FreeTypeValue(args.get(0).getInt() == args.get(1).getInt());
+  //}else if(name.equals("+")){
+  //  println("adding...");
+  //  return new FreeTypeValue(args.get(0).getInt() + args.get(1).getInt());
+  //}else if(name.equals("-")){
+  //  println("adding...");
+  //  return new FreeTypeValue(args.get(0).getInt() + args.get(1).getInt());
+  //}
   
   return new FreeTypeValue();
 }

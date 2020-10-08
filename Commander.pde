@@ -98,7 +98,7 @@ String[] tokenize(String command){
   }
 boolean isNaN(String value){
   try{
-    Integer.parseInt(value);
+    Float.parseFloat(value);
     return false;
    }catch(Exception e){
     return true;

@@ -60,10 +60,10 @@ String[] tokenize(String command){
     for(int i = 0; i < strSpl.length; i++){
       if(i%2 == 1)
         strSpl[i] = strSpl[i].replaceAll(" ", "!!whitespace!!")
-        .replaceAll("[\\(]", "!!str_pstart!!")
-        .replaceAll("[\\)]", "!!str_pend!!");
+        .replaceAll("\\(", "!!str_pstart!!")
+        .replaceAll("\\)", "!!str_pend!!");
       else
-        strSpl[i] = strSpl[i].replaceAll("[\\(]", " ( ").replaceAll("[\\)]", " ) ");
+        strSpl[i] = strSpl[i].replaceAll("\\(", " ( ").replaceAll("\\)", " ) ");
     }
     
     String[] result = String.join("\"", strSpl).trim().split("\\s+");
@@ -79,6 +79,7 @@ String[] tokenize(String command){
 
  String parenthesize(String[] tonkenized){
     for(int i = 0; i < tonkenized.length; i++){
+      println("tonkenized[i]: "+tonkenized[i]);
       if(tonkenized[i].equals("(")) tonkenized[i] = "[\"\"";
       else if(tonkenized[i].equals(")")) tonkenized[i] = "\"\"]";
       else if(tonkenized[i].length() == 0) tonkenized[i] = tonkenized[i];
@@ -91,6 +92,8 @@ String[] tokenize(String command){
             tonkenized[i]
           )
       );
+      
+      println("tonkenized[i] after: "+tonkenized[i]);
     }
     
     return "["+String.join(",", tonkenized).replaceAll("!!str_pstart!!", "(").replaceAll("!!str_pend!!", ")")+"]";
